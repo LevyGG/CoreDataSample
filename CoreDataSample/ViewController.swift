@@ -14,7 +14,30 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	var item = [Manager]()
 
 	@IBOutlet var tableView: UITableView!
-
+    let rfreshControl = UIRefreshControl()
+    
+    private func setUpRrefreshControl() {
+        let attributes = [ NSForegroundColorAttributeName : UIColor.lightGray ] as [String: Any]
+        rfreshControl.tintColor = UIColor.black
+        rfreshControl.attributedTitle = NSAttributedString(string: "Refresh ...", attributes: attributes)
+        rfreshControl.addTarget(self, action: #selector(ViewController.refreshData(sender:)), for: .valueChanged)
+        
+        if #available(iOS 10.0, *) {
+            self.tableView.refreshControl = rfreshControl
+        } else {
+            self.tableView.addSubview(rfreshControl)
+        }
+        
+    }
+    
+    func refreshData(sender: UIRefreshControl) {
+        rfreshControl.beginRefreshing()
+        self.loadCoreData()
+        self.tableView.reloadData()
+        rfreshControl.endRefreshing()
+    }
+    
+    
 	@IBAction func removeAllData(_ sender: AnyObject) {
 
 		if item.count != 0 {
@@ -99,12 +122,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 		super.viewDidLoad()
 
 		self.tableView.tableFooterView = UIView()
+        self.setUpRrefreshControl()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
 		self.loadCoreData()
+        
 	}
 
 	override func didReceiveMemoryWarning() {
