@@ -189,7 +189,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 	}
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+//        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 	}
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
