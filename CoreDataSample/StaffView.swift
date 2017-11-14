@@ -9,14 +9,19 @@
 import UIKit
 import CoreData
 
-class StaffView: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class StaffView: UIViewController {
 
-	public var manager : Manager? = nil
-
-	var item = [Staff]()
-
-	@IBOutlet var tableView: UITableView!
-
+    @IBOutlet var tableView: UITableView!
+    
+    public var manager : Manager? = nil
+    var item = [Staff]()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.loadCoreData()
+    }
+    
 	@IBAction func removeAllData(_ sender: AnyObject) {
 
 		let alert: UIAlertController =
@@ -46,13 +51,11 @@ class StaffView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 		present(alert, animated: true, completion: nil)
 	}
 
+    ///  添加数据
 	@IBAction func addData(_ sender: AnyObject) {
 
-		let alert: UIAlertController =
-			UIAlertController(title: "Input", message: "Name", preferredStyle:  UIAlertControllerStyle.alert)
-		let defaultAction: UIAlertAction =
-			UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
-			(action: UIAlertAction!) -> Void in
+		let alert: UIAlertController = UIAlertController(title: "Input", message: "Name", preferredStyle:  UIAlertControllerStyle.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{ (action: UIAlertAction!) -> Void in
 
 			let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 			let staff = Staff(context: context)
@@ -74,14 +77,10 @@ class StaffView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 			self.loadCoreData()
 			self.tableView.reloadData()
 		})
-		let cancelAction: UIAlertAction =
-			UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
-			(action: UIAlertAction!) -> Void in
-		})
+		let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{ (action: UIAlertAction!) -> Void in })
 		alert.addAction(cancelAction)
 		alert.addAction(defaultAction)
-		alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in
-		})
+		alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in })
 		present(alert, animated: true, completion: nil)
 	}
 
@@ -101,70 +100,70 @@ class StaffView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-		self.loadCoreData()
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 
+
+    
+	
+}
+
+extension StaffView:  UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return item.count
+        return item.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-		cell.textLabel!.text = item[indexPath.row].name
-		cell.detailTextLabel!.text = String(describing: item[indexPath.row].date!)
-
+        
+        cell.textLabel!.text = item[indexPath.row].name
+        cell.detailTextLabel!.text = String(describing: item[indexPath.row].date!)
+        
         return cell
     }
-
-	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-
-		if editingStyle == .delete {
-
-			let alert: UIAlertController =
-				UIAlertController(title: "Warning!", message: "Remove data?", preferredStyle:  UIAlertControllerStyle.alert)
-			let defaultAction: UIAlertAction =
-				UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
-				(action: UIAlertAction!) -> Void in
-
-				let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-				context.delete(self.item[indexPath.row])
-				do {
-					try context.save()
-				} catch {
-					print(String(format: "Error %@: %d",#file, #line))
-				}
-
-				self.loadCoreData()
-
-				tableView.deleteRows(at: [indexPath], with: .fade)
-			})
-			let cancelAction: UIAlertAction =
-				UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
-				(action: UIAlertAction!) -> Void in
-				self.tableView.reloadData()
-			})
-			alert.addAction(cancelAction)
-			alert.addAction(defaultAction)
-			present(alert, animated: true, completion: nil)
-
-		} else if editingStyle == .insert {
-		}
-	}
-
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-	}
-	
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            let alert: UIAlertController =
+                UIAlertController(title: "Warning!", message: "Remove data?", preferredStyle:  UIAlertControllerStyle.alert)
+            let defaultAction: UIAlertAction =
+                UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+                    (action: UIAlertAction!) -> Void in
+                    
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    context.delete(self.item[indexPath.row])
+                    do {
+                        try context.save()
+                    } catch {
+                        print(String(format: "Error %@: %d",#file, #line))
+                    }
+                    
+                    self.loadCoreData()
+                    
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                })
+            let cancelAction: UIAlertAction =
+                UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
+                    (action: UIAlertAction!) -> Void in
+                    self.tableView.reloadData()
+                })
+            alert.addAction(cancelAction)
+            alert.addAction(defaultAction)
+            present(alert, animated: true, completion: nil)
+            
+        } else if editingStyle == .insert {
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+    }
+    
 }
+
