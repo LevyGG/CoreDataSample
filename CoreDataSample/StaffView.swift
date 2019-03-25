@@ -66,11 +66,18 @@ class StaffView: UIViewController {
 				staff.name = String(self.item.count+1)
 			}
             
+//            let textField1 = alert.textFields![1] as UITextField
+//            if textField1.text != "" {
+//                staff.country = textField1.text
+//            } else {
+//                staff.country = "No country"
+//            }
+            
             let textField1 = alert.textFields![1] as UITextField
             if textField1.text != "" {
-                staff.country = textField1.text
+                staff.sex = textField1.text
             } else {
-                staff.country = "No country"
+                staff.sex = "No country"
             }
             
 			staff.date = NSDate()
@@ -130,7 +137,7 @@ extension StaffView:  UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         cell.textLabel!.text = item[indexPath.row].name
-        cell.detailTextLabel!.text = item[indexPath.row].country
+        cell.detailTextLabel!.text = item[indexPath.row].sex
 //        cell.detailTextLabel!.text = String(describing: item[indexPath.row].date!)
         
         return cell
