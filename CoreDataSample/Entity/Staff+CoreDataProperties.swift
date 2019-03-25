@@ -17,6 +17,7 @@ extension Staff {
 
     @NSManaged public var date: NSDate?
     @NSManaged public var name: String?
+    @NSManaged public var country: String?
     @NSManaged public var manager: Manager?
 
 }

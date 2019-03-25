@@ -34,6 +34,7 @@
 		326B54411D921605001F1288 /* Manager+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Manager+CoreDataProperties.swift"; path = "Entity/Manager+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		326B54421D921605001F1288 /* Staff+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Staff+CoreDataClass.swift"; path = "Entity/Staff+CoreDataClass.swift"; sourceTree = "<group>"; };
 		326B54431D921605001F1288 /* Staff+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Staff+CoreDataProperties.swift"; path = "Entity/Staff+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F60729CF22490B9600B07F04 /* CoreDataSample 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CoreDataSample 1.1.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,9 +353,10 @@
 		321A92F21D91606B003B1D91 /* CoreDataSample.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				F60729CF22490B9600B07F04 /* CoreDataSample 1.1.xcdatamodel */,
 				321A92F31D91606B003B1D91 /* CoreDataSample.xcdatamodel */,
 			);
-			currentVersion = 321A92F31D91606B003B1D91 /* CoreDataSample.xcdatamodel */;
+			currentVersion = F60729CF22490B9600B07F04 /* CoreDataSample 1.1.xcdatamodel */;
 			path = CoreDataSample.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

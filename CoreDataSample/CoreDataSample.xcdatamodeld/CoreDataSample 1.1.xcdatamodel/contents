@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="House" representedClassName="House" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Staff" inverseName="relationship" inverseEntity="Staff" syncable="YES"/>
+    </entity>
+    <entity name="Manager" representedClassName=".Manager" syncable="YES">
+        <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="staff" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Staff" inverseName="manager" inverseEntity="Staff" syncable="YES"/>
+    </entity>
+    <entity name="Staff" representedClassName=".Staff" syncable="YES">
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="manager" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Manager" inverseName="staff" inverseEntity="Manager" syncable="YES"/>
+        <relationship name="relationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="House" inverseName="owner" inverseEntity="House" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="House" positionX="259" positionY="186" width="128" height="75"/>
+        <element name="Manager" positionX="-182" positionY="72" width="128" height="105"/>
+        <element name="Staff" positionX="63" positionY="126" width="128" height="120"/>
+    </elements>
+</model>
