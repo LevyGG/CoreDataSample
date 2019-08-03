@@ -25,9 +25,9 @@ class StaffView: UIViewController {
 	@IBAction func removeAllData(_ sender: AnyObject) {
 
 		let alert: UIAlertController =
-			UIAlertController(title: "Warning!", message: "Remove all data?", preferredStyle:  UIAlertControllerStyle.alert)
+            UIAlertController(title: "Warning!", message: "Remove all data?", preferredStyle:  UIAlertController.Style.alert)
 		let defaultAction: UIAlertAction =
-			UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+            UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
 			(action: UIAlertAction!) -> Void in
 
 			let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -43,7 +43,7 @@ class StaffView: UIViewController {
 			self.tableView.reloadData()
 		})
 		let cancelAction: UIAlertAction =
-			UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
+            UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler:{
 			(action: UIAlertAction!) -> Void in
 		})
 		alert.addAction(cancelAction)
@@ -54,8 +54,8 @@ class StaffView: UIViewController {
     ///  添加数据
 	@IBAction func addData(_ sender: AnyObject) {
 
-		let alert: UIAlertController = UIAlertController(title: "Input", message: "Name", preferredStyle:  UIAlertControllerStyle.alert)
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{ (action: UIAlertAction!) -> Void in
+        let alert: UIAlertController = UIAlertController(title: "Input", message: "Name", preferredStyle:  UIAlertController.Style.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{ (action: UIAlertAction!) -> Void in
 
 			let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 			let staff = Staff(context: context)
@@ -92,7 +92,7 @@ class StaffView: UIViewController {
 			self.loadCoreData()
 			self.tableView.reloadData()
 		})
-		let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{ (action: UIAlertAction!) -> Void in })
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler:{ (action: UIAlertAction!) -> Void in })
 		alert.addAction(cancelAction)
 		alert.addAction(defaultAction)
 		alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in })
@@ -115,8 +115,19 @@ class StaffView: UIViewController {
 	}
 
 
+    @IBAction func saveToSandBox(_ sender: UIBarButtonItem) {
+        let df = UserDefaults.standard
+        df.setValue("a foo here", forKey: "foo")
+        df.synchronize()
+    }
     
-
+    @IBAction func printDF(_ sender: Any) {
+        let df = UserDefaults.standard
+        if let tt = df.object(forKey: "foo") as? String {
+            print(tt)
+        }
+    }
+    
 
 
 
@@ -143,14 +154,14 @@ extension StaffView:  UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             
             let alert: UIAlertController =
-                UIAlertController(title: "Warning!", message: "Remove data?", preferredStyle:  UIAlertControllerStyle.alert)
+                UIAlertController(title: "Warning!", message: "Remove data?", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction =
-                UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+                UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                     (action: UIAlertAction!) -> Void in
                     
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -166,7 +177,7 @@ extension StaffView:  UITableViewDataSource, UITableViewDelegate {
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 })
             let cancelAction: UIAlertAction =
-                UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
+                UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler:{
                     (action: UIAlertAction!) -> Void in
                     self.tableView.reloadData()
                 })

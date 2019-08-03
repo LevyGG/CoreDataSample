@@ -25,13 +25,16 @@ class ViewController: UIViewController {
         self.tableView.tableFooterView = UIView()
         self.setUpRrefreshControl()
         
+        let arr = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)
+        print("项目沙盒路径",arr[0])
+        
         self.loadCoreData()
     }
     
     private func setUpRrefreshControl() {
-        let attributes = [ NSForegroundColorAttributeName : UIColor.lightGray ] as [String: Any]
+//        let attributes = [ NSAttributedString.Key.foregroundColor.rawValue : UIColor.lightGray ]  as [String: Any]
         rfreshControl.tintColor = UIColor.black
-        rfreshControl.attributedTitle = NSAttributedString(string: "Refresh ...", attributes: attributes)
+        rfreshControl.attributedTitle = NSAttributedString(string: "Refresh ...")//, attributes: attributes)
         rfreshControl.addTarget(self, action: #selector(ViewController.refreshData(sender:)), for: .valueChanged)
         
         if #available(iOS 10.0, *) {
@@ -42,7 +45,7 @@ class ViewController: UIViewController {
         
     }
     
-    func refreshData(sender: UIRefreshControl) {
+    @objc func refreshData(sender: UIRefreshControl) {
         rfreshControl.beginRefreshing()
         self.loadCoreData()
         self.tableView.reloadData()
@@ -55,9 +58,9 @@ class ViewController: UIViewController {
 		if item.count != 0 {
 
 			let alert: UIAlertController =
-				UIAlertController(title: "Warning!", message: "Remove all data?", preferredStyle:  UIAlertControllerStyle.alert)
+                UIAlertController(title: "Warning!", message: "Remove all data?", preferredStyle:  UIAlertController.Style.alert)
 			let defaultAction: UIAlertAction =
-				UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+                UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
 				(action: UIAlertAction!) -> Void in
 			
 				let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -73,7 +76,7 @@ class ViewController: UIViewController {
 				self.tableView.reloadData()
 			})
 			let cancelAction: UIAlertAction =
-				UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
+                UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler:{
 				(action: UIAlertAction!) -> Void in
 			})
 			alert.addAction(cancelAction)
@@ -88,8 +91,8 @@ class ViewController: UIViewController {
     /// - Parameter sender: 按钮
 	@IBAction func addData(_ sender: AnyObject) {
 
-		let alert: UIAlertController = UIAlertController(title: "添加Manager对象", message: "名字", preferredStyle:  UIAlertControllerStyle.alert)
-		let defaultAction: UIAlertAction = UIAlertAction(title: "确定", style: UIAlertActionStyle.default, handler:{
+        let alert: UIAlertController = UIAlertController(title: "添加Manager对象", message: "名字", preferredStyle:  UIAlertController.Style.alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "确定", style: UIAlertAction.Style.default, handler:{
 			(action: UIAlertAction!) -> Void in
 
 			let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -111,7 +114,7 @@ class ViewController: UIViewController {
 			self.loadCoreData()
 			self.tableView.reloadData()
 		})
-		let cancelAction: UIAlertAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.cancel, handler:{ (action: UIAlertAction!) -> Void in })
+        let cancelAction: UIAlertAction = UIAlertAction(title: "取消", style: UIAlertAction.Style.cancel, handler:{ (action: UIAlertAction!) -> Void in })
 		alert.addAction(cancelAction)
 		alert.addAction(defaultAction)
 		alert.addTextField(configurationHandler: {(text:UITextField!) -> Void in })
@@ -163,14 +166,14 @@ extension  ViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             
             let alert: UIAlertController =
-                UIAlertController(title: "Warning!", message: "Remove data?", preferredStyle:  UIAlertControllerStyle.alert)
+                UIAlertController(title: "Warning!", message: "Remove data?", preferredStyle:  UIAlertController.Style.alert)
             let defaultAction: UIAlertAction =
-                UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler:{
+                UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler:{
                     (action: UIAlertAction!) -> Void in
                     
                     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -186,7 +189,7 @@ extension  ViewController: UITableViewDataSource, UITableViewDelegate {
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 })
             let cancelAction: UIAlertAction =
-                UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler:{
+                UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler:{
                     (action: UIAlertAction!) -> Void in
                     self.tableView.reloadData()
                 })
